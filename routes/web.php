@@ -19,7 +19,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/sach','App\Http\Controllers\ViduLayoutController@sach');
-Route::get('/sach/theloai/{id}','App\Http\Controllers\ViduLayoutController@theloai');
+use App\Http\Controllers\SachChiTietController;
+Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chitiet');
 
-Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\ViduLayoutController@chitiet');
+//Layout
+Route::get('/sach','App\Http\Controllers\BookController@sach');
+Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
