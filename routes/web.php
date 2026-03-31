@@ -25,3 +25,6 @@ Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chi
 //Layout
 Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
+
+//ajax
+Route::post('/bookview', 'App\Http\Controllers\BookController@bookview')->name('bookview');
