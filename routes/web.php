@@ -18,3 +18,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+use App\Http\Controllers\SachChiTietController;
+Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chitiet');
+
+//Layout
+Route::get('/sach','App\Http\Controllers\BookController@sach');
+Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
