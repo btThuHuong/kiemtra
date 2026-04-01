@@ -40,4 +40,45 @@
             });
         });
     </script>
+    <style>
+        .book
+        {
+        position:relative;
+        margin:10px;
+        text-align:center;
+        padding-bottom:35px;
+        }
+        .btn-add-product
+        {
+        position:absolute;
+        bottom:0;
+        width:100%;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function(){
+        $(".add-product").click(function(){
+        id = $(this).attr("book_id");
+        num = 1;
+        $.ajax({
+        type:"POST",
+        dataType:"json",
+        url: "{{route('cartadd')}}",
+        data:{"_token": "{{ csrf_token() }}","id":id,"num":num},
+        beforeSend:function(){
+        },
+        success:function(data){
+        $("#cart-number-product").html(data);
+        },
+        error: function (xhr,status,error){
+        },
+        complete: function(xhr,status){
+        }
+        });
+        });
+        });
+    </script>
+
+
 </x-book-layout>
