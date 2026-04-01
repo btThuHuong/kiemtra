@@ -26,8 +26,24 @@ Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chi
 Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
 
-Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')
-->middleware('auth')->name("account");
+Route::get('/accountpanel', 'App\Http\Controllers\AccountController@accountpanel')
+    ->middleware('auth')->name("account");
+Route::get('/book/list','App\Http\Controllers\AdminController@booklist')
+            ->middleware('auth')->name("booklist");
+Route::get('/book/create','App\Http\Controllers\AdminController@bookcreate')
+            ->middleware('auth')->name("bookcreate");
+Route::get('/book/edit/{id}','App\Http\Controllers\AdminController@bookedit')
+            ->middleware('auth')->name("bookedit");
+Route::post('/book/save/{action}','App\Http\Controllers\AdminController@booksave')
+            ->middleware('auth')->name("booksave");
+Route::post('/book/delete','App\Http\Controllers\AdminController@bookdelete')
+            ->middleware('auth')->name("bookdelete");
 
+
+
+
+//Layout
+Route::get('/sach','App\Http\Controllers\BookController@sach');
+Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
 Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
 ->middleware('auth')->name('saveinfo');
