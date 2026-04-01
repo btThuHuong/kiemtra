@@ -41,3 +41,9 @@ Route::post('/book/delete','App\Http\Controllers\AdminController@bookdelete')
 
 
 
+
+//Layout
+Route::get('/sach','App\Http\Controllers\BookController@sach');
+Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
+Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
+->middleware('auth')->name('saveinfo');
