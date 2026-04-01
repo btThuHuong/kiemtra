@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// Bước 1: Thêm dòng này 
-use App\Notifications\CustomResetPass; 
+use App\Notifications\CustomResetPass;
+
+
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use  Notifiable;
 
     /**
      * Bước 2: Thêm hàm này vào cuối class [cite: 191, 192]
@@ -40,4 +42,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+ 
+    public function sendPasswordResetNotification($token)
+    {
+    $this->notify(new CustomResetPass($token));
+    }
+
 }
