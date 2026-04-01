@@ -25,3 +25,9 @@ Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chi
 //Layout
 Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
+
+Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')
+->middleware('auth')->name("account");
+
+Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
+->middleware('auth')->name('saveinfo');
