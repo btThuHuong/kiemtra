@@ -18,20 +18,20 @@ class ViduLayoutController extends Controller
     public function sach()
     {
         $data = DB::select("select * from sach order by gia_ban asc limit 0,8");
-        return view("vidusach.index", compact("data"));
+        return view("sach.index", compact("data"));
     }
 
     public function theloai($id)
     {
     $data = DB::select("select * from sach where the_loai = ?",[$id]);
-    return view("vidusach.index", compact("data"));
+    return view("sach.index", compact("data"));
     }
 
     public function chitiet($id)
     {
         $book = DB::select("select * from sach where id = ?", [$id]);
         $data = $book[0];    
-        return view("vidusach.chitiet", compact("data"));
+        return view("sach.chitiet", compact("data"));
     }
 
  
