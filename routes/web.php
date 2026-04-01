@@ -26,6 +26,8 @@ Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chi
 Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
 
+//ajax
+Route::post('/bookview', 'App\Http\Controllers\BookController@bookview')->name('bookview');
 Route::get('/order','App\Http\Controllers\BookController@order')->name('order');
 
 Route::post('/cart/add', 'App\Http\Controllers\BookController@cartadd')->name('cartadd');

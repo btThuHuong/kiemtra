@@ -3,6 +3,43 @@
         Sách
     </x-slot>
 
+    <div id='book-view-div'>
+        <div class='list-book'>
+            @foreach($data as $row)
+                <div class='book'>
+                    <a href="{{ url('sach/chitiet/'.$row->id) }}">
+                        <img src="{{ asset('hinh/image/'.$row->file_anh_bia) }}" width='200px' height='200px'><br>
+                        <b>{{ $row->tieu_de }}</b><br/>
+                        <i>{{ number_format($row->gia_ban,0,",",".") }}đ</i>
+                    </a>
+                    <div class='btn-add-product'>
+                        <button class='btn btn-success btn-sm mb-1 add-product' book_id="{{ $row->id }}">
+                            Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(".menu-the-loai").click(function() {
+            the_loai = $(this).attr("the_loai");
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "{{ route('bookview') }}",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "the_loai": the_loai
+                },
+                success: function(data) {
+                    $("#book-view-div").html(data);
+                }
+            });
+        });
+    </script>
     <style>
         .book
         {
@@ -18,28 +55,6 @@
         width:100%;
         }
     </style>
-
-    <div class='list-book'>
-        @foreach($data as $row)
-            <div class='book'>
-                <a href="{{url('sach/chitiet/'.$row->id)}}">
-                    <img src="{{asset('hinh/image/'.$row->file_anh_bia)}}" width='200px' height='200px'><br>
-                    <b>{{$row->tieu_de}}</b><br/>
-                    <i>{{number_format($row->gia_ban,0,",",".")}}đ</i>
-                </a>
-
-                <div class='btn-add-product'>
-                    <button class='btn btn-success btn-sm mb-1 add-product' book_id="{{$row->id}}">
-                    Thêm vào giỏ hàng
-                    </button>
-                </div>
-
-            </div>
-        @endforeach
-    </div>
-
-
-    
 
     <script>
         $(document).ready(function(){
