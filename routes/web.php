@@ -19,7 +19,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/sach','App\Http\Controllers\ViduLayoutController@sach');
-Route::get('/sach/theloai/{id}','App\Http\Controllers\ViduLayoutController@theloai');
+use App\Http\Controllers\SachChiTietController;
+Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chitiet');
 
-Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\ViduLayoutController@chitiet');
+//Layout
+Route::get('/sach','App\Http\Controllers\BookController@sach');
+Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
+
+Route::get('/order','App\Http\Controllers\BookController@order')->name('order');
+
+Route::post('/cart/add', 'App\Http\Controllers\BookController@cartadd')->name('cartadd');
+Route::post('/cart/delete','App\Http\Controllers\BookController@cartdelete')->name('cartdelete');
+Route::post('/order/create','App\Http\Controllers\BookController@ordercreate')
+->middleware('auth')->name('ordercreate');
