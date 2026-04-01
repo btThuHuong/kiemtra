@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\TestSendEmail;
+use App\Models\User;
+
 
 class BookController extends Controller
 {
@@ -107,6 +111,23 @@ class BookController extends Controller
         });
         }
         return view("sach.order", compact('data','quantity'));
+    }
+
+    function testemail()
+    {
+    Notification::route('mail', "nhinguyenly2810@gmail.com")
+    ->notify(new TestSendEmail());
+    }
+
+  
+
+    function testemail2()
+    {
+    $user = User::find(2);
+    $donHang = DB::select("select * from chi_tiet_don_hang c, sach s
+    where c.sach_id = s.id
+    and c.ma_don_hang = 7");
+    $user->notify(new TestSendEmail($donHang));
     }
 
 
