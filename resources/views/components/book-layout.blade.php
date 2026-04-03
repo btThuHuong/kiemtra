@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -30,9 +29,21 @@
             }
             .book
             {
-            
                 margin:10px;
                 text-align:center;
+            }
+            .book
+            {
+                position:relative;
+                margin:10px;
+                text-align:center;
+                padding-bottom:35px;
+            }
+            .btn-add-product
+            { 
+                position:absolute;
+                bottom:0;
+                width:100%;
             }
     </style>
 </head>
@@ -44,7 +55,7 @@
                     <div class='col-9 p-0'>
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link menu-the-loai" href="#" the_loai="">Trang chủ</a>
+                                <a class="nav-link menu-the-loai" href="#" the_loai=" ">Trang chủ</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link menu-the-loai" href="#" the_loai="1">Tiểu thuyết</a>
@@ -106,12 +117,12 @@
             </div>
         </main>
         
-        <!--<footer>
+        <!-- <footer>
             <div class='row' style='text-align:center'>
                 <div class='col-4'>TRỤ SỞ</div>
                 <div class='col-4'>THÔNG TIN CHUNG</div>
                 <div class='col-4'>BẢN ĐỒ</div>
             </div>
-        </footer>-->
+        </footer> -->
     </body>
 </html>

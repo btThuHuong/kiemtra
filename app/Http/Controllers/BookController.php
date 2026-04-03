@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\TestSendEmail;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class BookController extends Controller
@@ -24,31 +25,39 @@ class BookController extends Controller
 
     public function bookview(Request $request)
     {
-        $the_loai = $request->input('the_loai');
+        $the_loai = $request->input("the_loai");
         $data = [];
-        
-        if ($the_loai != "") {
-            $data = DB::select("select * from sach where the_loai = ?", [$the_loai]);
-        } else {
-            $data = DB::select("select * from sach order by id desc limit 0,10");
-        }
-        
-        return view('sach.bookview', compact('data'));
+        if($the_loai!="")
+        $data = DB::select("select * from sach where the_loai = ?",[$the_loai]);
+        else
+        $data = DB::select("select * from sach order by gia_ban asc limit 0,10");
+        return view("sach.bookview", compact("data"));
     }
 
-    public function cartadd(Request $request) {
+    public function cartadd(Request $request)
+    {
+        $request->validate([
+            "id" => ["required", "numeric"],
+            "num" => ["required", "numeric"]
+        ]);
+
         $id = $request->id;
         $num = $request->num;
-        $cart = session()->get("cart", []);
+        $cart = [];
 
-        if(isset($cart[$id])) {
-            $cart[$id] += $num;
+        if(session()->has('cart')) {
+            $cart = session()->get("cart");
+            if(isset($cart[$id])) {
+                $cart[$id] += $num; 
+            } else {
+                $cart[$id] = $num;
+            }
         } else {
             $cart[$id] = $num;
         }
 
         session()->put("cart", $cart);
-        return count($cart); // Trả về số lượng để Ajax hiển thị
+        return count($cart); 
     }
 
 
