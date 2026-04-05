@@ -19,12 +19,14 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-use App\Http\Controllers\SachChiTietController;
-Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chitiet');
-
 //Layout
 Route::get('/sach','App\Http\Controllers\BookController@sach');
 Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
+Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
+->middleware('auth')->name('saveinfo');
+
+use App\Http\Controllers\SachChiTietController;
+Route::get('/sach/chitiet/{id}', 'App\Http\Controllers\SachChiTietController@chitiet');
 
 //ajax
 Route::post('/bookview', 'App\Http\Controllers\BookController@bookview')->name('bookview');
@@ -35,7 +37,10 @@ Route::post('/cart/delete','App\Http\Controllers\BookController@cartdelete')->na
 Route::post('/order/create','App\Http\Controllers\BookController@ordercreate')
 ->middleware('auth')->name('ordercreate');
 
+//mail
 Route::get('/testemail','App\Http\Controllers\BookController@testemail2');
+
+//quan ly
 Route::get('/accountpanel', 'App\Http\Controllers\AccountController@accountpanel')
     ->middleware('auth')->name("account");
 Route::get('/book/list','App\Http\Controllers\AdminController@booklist')
@@ -48,8 +53,4 @@ Route::post('/book/save/{action}','App\Http\Controllers\AdminController@booksave
             ->middleware('auth')->name("booksave");
 Route::post('/book/delete','App\Http\Controllers\AdminController@bookdelete')
             ->middleware('auth')->name("bookdelete");
-//Layout
-Route::get('/sach','App\Http\Controllers\BookController@sach');
-Route::get('/sach/theloai/{id}','App\Http\Controllers\BookController@theloai');
-Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
-->middleware('auth')->name('saveinfo');
+

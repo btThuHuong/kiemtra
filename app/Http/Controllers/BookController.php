@@ -9,7 +9,6 @@ use App\Notifications\TestSendEmail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-
 class BookController extends Controller
 {
     function sach()
@@ -106,12 +105,14 @@ class BookController extends Controller
         ]);
         $data = [];
         $quantity = [];
+        $user = Auth::user();
         if(session()->has('cart'))
         {
         $order = ["ngay_dat_hang"=>DB::raw("now()"),"tinh_trang"=>1,
         "hinh_thuc_thanh_toan"=>$request->hinh_thuc_thanh_toan,
-        "user_id"=>Auth::user()->id];
-        DB::transaction(function () use ($order) {
+        "user_id"=> $user->id];
+        $donHang = [];
+        DB::transaction(function () use ($order, &$donHang) {
         $id_don_hang = DB::table("don_hang")->insertGetId($order);
         $cart = session("cart");
         $list_book = "";
@@ -129,29 +130,44 @@ class BookController extends Controller
         $detail[] = ["ma_don_hang"=>$id_don_hang,"sach_id"=>$row->id,
         "so_luong"=>$quantity[$row->id],"don_gia"=>$row->gia_ban];
         }
+        
         DB::table("chi_tiet_don_hang")->insert($detail);
+        
+        $donHang = DB::select("select * from chi_tiet_don_hang c, sach s 
+                                   where c.sach_id = s.id 
+                                   and c.ma_don_hang = ?", [$id_don_hang]);
         session()->forget('cart');
         });
         }
+        $user->notify(new TestSendEmail($donHang));
         return view("sach.order", compact('data','quantity'));
     }
 
     function testemail()
     {
-    Notification::route('mail', "nhinguyenly2810@gmail.com")
-    ->notify(new TestSendEmail());
+        $user = Auth::user();
+
+        if ($user) {
+            Notification::route('mail', $user->email)
+                ->notify(new TestSendEmail());
+            
+            return "Mail test đã được gửi tới: " . $user->email;
+        }
+
+        return "Vui lòng đăng nhập để nhận mail test.";
     }
-
   
-
     function testemail2()
     {
-    $user = User::find(2);
+    $user = Auth::user();
+    if (!$user) {
+        return "Bạn cần đăng nhập để thực hiện chức năng này.";
+    }
     $donHang = DB::select("select * from chi_tiet_don_hang c, sach s
     where c.sach_id = s.id
     and c.ma_don_hang = 7");
     $user->notify(new TestSendEmail($donHang));
+    return "Đã gửi mail đến: " . $user->email;
     }
-
 
 }
